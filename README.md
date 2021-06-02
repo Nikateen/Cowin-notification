@@ -29,7 +29,7 @@ Python3
         *18/45 based on if you want a slot for 18+ or 45+*
 
     - VACCINE_TYPE:
-        *COVAXIN/COVISHIELD based on your vaccine preference*
+        *COVAXIN/COVISHIELD/SPUTNIK based on your vaccine preference*
 
     - DISTRICT_ID:
        *Select your district IDs from [this list](#district_list))*
