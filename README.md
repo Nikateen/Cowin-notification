@@ -44,7 +44,7 @@ Python3
     **Note:**
     you can add mutiple arguments to each field by seperating with commas, for example:
 
-       python3 Cowin-Notify.py 02-06-2021,03-06-2021 18,45 COVAXIN,COVISHIELD 265,273 <API_KEY>
+       python3 Cowin-Notify.py 02-06-2021,03-06-2021 18,45 COVAXIN,COVISHIELD 265,273 <API_KEY> <CHAT_ID>
 
     **Warning:**
     Adding more dates or Districts will slow down bot response time
