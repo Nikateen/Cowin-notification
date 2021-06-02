@@ -14,10 +14,11 @@ Python3
     ```
 
 3. Setup a telegram bot and obtain the API token using the steps [listed here](#tele_bot)
-4. Run the command:
+4. Obtain the telegram chat ID you wish to use using the steps [listed here](#chat_id)
+5. Run the command:
     
     ```
-    python3 Cowin-Notify.py <DATE> <AGE> <VACCINE_TYPE> <DISTRICT_ID> <API_Token>
+    python3 Cowin-Notify.py <DATE> <AGE> <VACCINE_TYPE> <DISTRICT_ID> <API_Token> <CHAT_ID>
     ```
 
     ### Argument Description:  
@@ -35,8 +36,13 @@ Python3
 
     - API_Token:
         *You will need to enter the API_Token of your telegram bot*
-
-    **Note**: you can add mutiple arguments to each field by seperating with commas, for example:
+    
+    - CHAT_ID:
+        *Enter the Chat ID you want your bot to report to here*
+    <br>
+    
+    **Note:**
+    you can add mutiple arguments to each field by seperating with commas, for example:
 
        python3 Cowin-Notify.py 02-06-2021,03-06-2021 18,45 COVAXIN,COVISHIELD 265,273 <API_KEY>
 
@@ -52,6 +58,43 @@ Python3
   3. Use the API token as mentioned above
 
 <br>
+
+## <a name="chat_id">Get your Telegram Chat ID </a>:
+
+   1. Paste the following link in your browser. Replace `<API-token>`  with the API access token that you identified or created in the previous section:
+        ```
+        https://api.telegram.org/bot<API-access-token>/getUpdates?offset=0
+        ```
+   2. Send a message to your bot in the Telegram application. The message text can be anything. Your chat history must include at least one message to get your chat ID.
+   3. Refresh your browser.
+   4. Identify the numerical chat ID by finding the id inside the chat JSON object. In the example below, the chat ID is `123456789`.
+```
+{  
+   "ok":true,
+   "result":[  
+      {  
+         "update_id":XXXXXXXXX,
+         "message":{  
+            "message_id":2,
+            "from":{  
+               "id":123456789,
+               "first_name":"Mushroom",
+               "last_name":"Kap"
+            },
+            "chat":{  
+               "id":123456789,
+               "first_name":"Mushroom",
+               "last_name":"Kap",
+               "type":"private"
+            },
+            "date":1487183963,
+            "text":"hi"
+         }
+      }
+   ]
+}
+```
+       
 
 ## <a name="district_list">District IDs</a>
 
