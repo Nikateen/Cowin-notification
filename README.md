@@ -6,7 +6,7 @@ Python3
 
 <br>
 
-## Setup Guide:
+# Setup Guide:
 
 1. Install dependecies:
     ```
@@ -18,38 +18,70 @@ Python3
 5. Run the command:
     
     ```
-    python3 Cowin-Notify.py <DATE> <AGE> <VACCINE_TYPE> <DISTRICT_ID> <API_Token> <CHAT_ID>
+    python3 Cowin-Notify.py --api=<API_TOKEN> --cid=<CHAT_ID> --did=<DISTRICT_ID> [OPTIONS]
     ```
 
-    ### Argument Description:  
+    ## Argument Description:  
 
-    - Date:
-        *dd-mm-yyyy format for the date you want to book a slot*
-    - AGE:
-        *18/45 based on if you want a slot for 18+ or 45+*
+      ### Required Arguments:
+        - API_Token:
+          ```--api=<API_TOKEN>``` Replace `<API_TOKEN>` with the [API access token](#tele_bot) of your telegram bot
+        - Chat_ID:
+          ```--cid=<CHAT_ID>```  Replace `<CHAT_ID>` with the [Chat ID](#chat_id) you want your bot to report to
+        - DISTRICT_ID:
+          ```--did=<DISTRICT_ID> Replace `<DISTRICT_ID>` with the [District ID](#district_list))* you want to search in
 
-    - VACCINE_TYPE:
-        *COVAXIN/COVISHIELD/SPUTNIK based on your vaccine preference*
+      ### Basic Arguments (Optional)
+        - Date:
+          ```--date=dd-mm-yyyy``` enter the date(s) you are currently looking for
+          default value will be the current date
+        - AGE:
+          ```--age=<AGE>```  Replace `<AGE>` with the Age range you wish to search. Currently the options are: `18` , `45`
+            default value is: `18,45`
 
-    - DISTRICT_ID:
-       *Select your district IDs from [this list](#district_list))*
+        - VACCINE_TYPE:
+          ```--vaccine=<VACCINE>```  Replace `<VACCINE>` with the type of vaccine you wish to search Currently the options are: `COVAXIN`,`COVISHIELD`,`SPUTNIK`
+            default value is: `COVAXIN,COVISHIELD,SPUTNIK`
 
-    - API_Token:
-        *You will need to enter the API_Token of your telegram bot*
-    
-    - CHAT_ID:
-        *Enter the Chat ID you want your bot to report to here*
+        - DOSES:
+         ```--dose=<DOSE_NUMBER>``` Replace `<DOSE_NUMBER>` with the dose number the to look for specific doeses
+          default value is: `1,2` (This may cause issues in the future depending on if dose2 does not exist)
+        
+        - THRESHOLD:
+        ```--threshold=<THRESHOLD>``` Replace `<THRESHOLD>` with the number of doses ( of each type ) that need to be present for you to be notified
+          default value is: `1`
+          
+          For example:
+            if you use the option `-threshold=12`, you will only be notified if there are 12 dose1 or 12dose2 vaccines respectively
+          Warning:
+            chainging this value to 0 will notify you of every slot available and likely cause a crash with telegram bot 
+
+      ### Advanced Arguments (Optional)
+
+        - EXPIRE_TIME:
+          ```--expire=<EXPIRE_TIME> Replace `<EXPIRE_TIME>` with the TTL for each message entry, changing this will resend messages that have not updated 
+            after <EXPIRE_TIME> mins 
+
+        - ALTERNATE_SEARCH
+          ```--alternate``` Include this option to try alternate search. Use this when it appears the regular search is not finding slots available 
+          Uses 
+          Alternate seach will look for slots for the next 7 days after a given date so it is not neccessary to provide multiple dates 
+
+  
     <br>
-    
+
+
     **Note:**
     you can add mutiple arguments to each field by seperating with commas, for example:
 
-       python3 Cowin-Notify.py 02-06-2021,03-06-2021 18,45 COVAXIN,COVISHIELD 265,273 <API_KEY> <CHAT_ID>
+       python3 Cowin-Notify.py --date=02-06-2021,03-06-2021 --age=18,45 --vaccine=COVAXIN,COVISHIELD --did=265,273 --api=<API_KEY> --cid=<CHAT_ID>
 
     **Warning:**
     Adding more dates or Districts will slow down bot response time
   
+
 <br>
+
 
 ## <a name="tele_bot">Setting up a Telegram Bot</a>:
 
@@ -57,13 +89,15 @@ Python3
   2. Use ```/newbot``` to create a new bot. The BotFather will ask you for a name and username, then generate an API token for your new bot.
   3. Use the API token as mentioned above
 
+
 <br>
+
 
 ## <a name="chat_id">Get your Telegram Chat ID </a>:
 
-   1. Paste the following link in your browser. Replace `<API-token>`  with the API access token that you identified or created in the previous section:
+   1. Paste the following link in your browser. Replace `<API_TOKEN>`  with the API access token that you identified or created in the previous section:
         ```
-        https://api.telegram.org/bot<API-access-token>/getUpdates?offset=0
+        https://api.telegram.org/bot<API_TOKEN>/getUpdates?offset=0
         ```
    2. Send a message to your bot in the Telegram application. The message text can be anything. Your chat history must include at least one message to get your chat ID.
    3. Refresh your browser.
@@ -94,7 +128,10 @@ Python3
    ]
 }
 ```
-       
+
+
+<br>
+
 
 ## <a name="district_list">District IDs</a>
 
