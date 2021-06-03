@@ -36,21 +36,26 @@ def requestInfo(dID,date):
     data = response.json()
     return data
 
-def removeExpired(store_queue,expire_queue):
+def removeExpired(expire_queue):
     now = datetime.now()
-    for i in range(len(store_queue)):     
-        if(expire_queue[store_queue[i]] > now ):
-            expire_queue.pop(store_queue[i])
-            store_queue.pop(i)
-    return store_queue,expire_queue
+    topop = []
+    for i in expire_queue.keys():    
+        if(expire_queue[i] < now ):
+            topop.append(i)
+
+    for i in topop:
+        expire_queue.pop(i)
+
+    print("E Q",expire_queue)
+    return expire_queue
 
 
-store_queue = []
+
 expire_queue = {}
 
 while(True):
-    store_queue,expire_queue = removeExpired(store_queue,expire_queue)
-    time.sleep( 5*len(listOfDistrictID)*len(listOfDates) )
+    expire_queue = removeExpired(expire_queue)
+    time.sleep( 7*len(listOfDistrictID)*len(listOfDates) )
 
     print("Checking...")
     for date in listOfDates:
@@ -72,13 +77,16 @@ while(True):
                     )
 
                     endingmsg = "\n\n\n*last updated at:* \n{atime}\n\n\n".format(atime = datetime.now())
-                    print(message+endingmsg)
-                    if message not in store_queue:
+                    #print(message + endingmsg)
+
+                    if message not in expire_queue.keys():
                         resp = sendtext(message+endingmsg,bot_token,bot_chatID)
-                        print(resp)
-                        store_queue.append( message )
-                        expire_queue[message] = timedelta(minutes = expireTime )
+                        print("Message sent!\n\n\n")
                         
+                        expire_queue[message] = datetime.now()+ timedelta(minutes = expireTime )
+                        print(expire_queue)
+                    else:
+                        print("Message already sent")
 
                     flag = 0
 
