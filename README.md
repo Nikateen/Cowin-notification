@@ -1,6 +1,17 @@
-# About
+# Cowin-notification
 
-Run a python script that can look for vaccine avaiability based on preference
+Run a python script that can look for vaccine avaiability based on your preferences
+
+<br>
+
+# Donate
+If you want to support me you can do so below 
+
+
+
+[![Donate](https://img.shields.io/badge/Help%20support%20me-RazorPay-blue.svg)](https://rzp.io/l/maDyuelFwi)
+
+   
 
 <br>
 
