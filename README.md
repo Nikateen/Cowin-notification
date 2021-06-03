@@ -1,8 +1,6 @@
-# Cowin-notification
-Runs a small python script to ping you via telegram bot for vaccine slot availablility
+# About
 
-**Prerequisites:**
-Python3 
+Run a python script that can look for vaccine avaiability based on preference
 
 <br>
 
@@ -13,87 +11,79 @@ Python3
     pip install -r requirements.txt
     ```
 
-3. Setup a telegram bot and obtain the API token using the steps [listed here](#tele_bot)
-4. Obtain the telegram chat ID you wish to use using the steps [listed here](#chat_id)
-5. Run the command:
+3. [Setup a telegram bot](#tele_bot) and obtain the API token
+4. [Obtain the telegram chat ID](#chat_id) you wish to use 
     
     ```
     python3 Cowin-Notify.py --api=<API_TOKEN> --cid=<CHAT_ID> --did=<DISTRICT_ID> [OPTIONS]
     ```
 
-    ## Argument Description:  
-
+    ## Argument Description:
+    
       ### Required Arguments:
-        - API_Token:
-          ```--api=<API_TOKEN>``` Replace `<API_TOKEN>` with the [API access token](#tele_bot) of your telegram bot
-        - Chat_ID:
-          ```--cid=<CHAT_ID>```  Replace `<CHAT_ID>` with the [Chat ID](#chat_id) you want your bot to report to
-        - DISTRICT_ID:
-          ```--did=<DISTRICT_ID> Replace `<DISTRICT_ID>` with the [District ID](#district_list))* you want to search in
-
-      ### Basic Arguments (Optional)
-        - Date:
-          ```--date=dd-mm-yyyy``` enter the date(s) you are currently looking for
-          default value will be the current date
-        - AGE:
-          ```--age=<AGE>```  Replace `<AGE>` with the Age range you wish to search. Currently the options are: `18` , `45`
-            default value is: `18,45`
-
-        - VACCINE_TYPE:
-          ```--vaccine=<VACCINE>```  Replace `<VACCINE>` with the type of vaccine you wish to search Currently the options are: `COVAXIN`,`COVISHIELD`,`SPUTNIK`
-            default value is: `COVAXIN,COVISHIELD,SPUTNIK`
-
-        - DOSES:
-         ```--dose=<DOSE_NUMBER>``` Replace `<DOSE_NUMBER>` with the dose number the to look for specific doeses
-          default value is: `1,2` (This may cause issues in the future depending on if dose2 does not exist)
+      - API_Token:
+          - ```--api=<API_TOKEN>``` Replace <API_TOKEN> with the [API access token](#tele_bot) of your telegram bot
+      - Chat_ID:
+          - ```--cid=<CHAT_ID>```  Replace <CHAT_ID> with the [Chat ID](#chat_id) you want your bot to report to
+      - DISTRICT_ID:
+          - ```--did=<DISTRICT_ID>``` Replace <DISTRICT_ID> with the [District ID](#district_list) you want to search in
+      <br>
+      
+      ### Basic Arguments ( Optional )
+      - DATE:
+          - ```--date=dd-mm-yyyy``` enter the date(s) you wish to search
+          - default value will be the current date
+      - AGE:
+          - ```--age=<AGE>``` Replace \<AGE> with the Age range you wish to search. Currently the options are: 18,45
+          - default value is: ```18,45```
+      - VACCINE_TYPE:
+          - ```--vaccine=<VACCINE>```  Replace \<VACCINE> with the type of vaccine you prefer
+          - Currently the options are: `COVAXIN`,`COVISHIELD`,`SPUTNIK`
+          - default value is: `COVAXIN,COVISHIELD,SPUTNIK`
+      - DOSES:
+         - ```--dose=<DOSE_NUMBER>``` Replace \<DOSE_NUMBER> with the dose number the to look for specific doeses
+         - default value is: `1,2` (This may cause issues in the future depending on if dose2 does not exist)
+      - THRESHOLD:
+        - ```--threshold=<THRESHOLD>``` Replace \<THRESHOLD> with the number of doses ( of each type ) that need to be present for you to be notified
+        - default value is: `1`
+        - For example: if you use the option `-threshold=12`, you will only be notified if there are 12 dose1 or 12 dose2 vaccines respectively
+        - **Warning:** changing this value to 0 will notify you of every slot available and likely cause a crash with telegram bot 
+      <br>
+      
+      ### Advanced Arguments ( Optional )
+      - EXPIRE_TIME:
+          - ```--expire=<EXPIRE_TIME>``` Replace `<EXPIRE_TIME>` with the TTL for each message entry
+          - changing this will resend messages that have not updated after <EXPIRE_TIME> mins 
+      - ALTERNATE_SEARCH (NOT IMPLEMENTED)
+          - ```--alternate``` Include this option to try alternate search. 
+          - Use this when it appears the regular search is not finding slots available 
+          - Uses `calendarByDistrict`
+          - Alternate seach will look for slots for the next 7 days after a given date so it is not neccessary to provide multiple dates 
+        <br>
         
-        - THRESHOLD:
-        ```--threshold=<THRESHOLD>``` Replace `<THRESHOLD>` with the number of doses ( of each type ) that need to be present for you to be notified
-          default value is: `1`
-          
-          For example:
-            if you use the option `-threshold=12`, you will only be notified if there are 12 dose1 or 12dose2 vaccines respectively
-          Warning:
-            chainging this value to 0 will notify you of every slot available and likely cause a crash with telegram bot 
-
-      ### Advanced Arguments (Optional)
-
-        - EXPIRE_TIME:
-          ```--expire=<EXPIRE_TIME> Replace `<EXPIRE_TIME>` with the TTL for each message entry, changing this will resend messages that have not updated 
-            after <EXPIRE_TIME> mins 
-
-        - ALTERNATE_SEARCH
-          ```--alternate``` Include this option to try alternate search. Use this when it appears the regular search is not finding slots available 
-          Uses 
-          Alternate seach will look for slots for the next 7 days after a given date so it is not neccessary to provide multiple dates 
-
-  
-    <br>
-
-
-    **Note:**
-    you can add mutiple arguments to each field by seperating with commas, for example:
-
-       python3 Cowin-Notify.py --date=02-06-2021,03-06-2021 --age=18,45 --vaccine=COVAXIN,COVISHIELD --did=265,273 --api=<API_KEY> --cid=<CHAT_ID>
-
-    **Warning:**
-    Adding more dates or Districts will slow down bot response time
+# Example
+    
+    python3 Cowin-Notify.py --date=02-06-2021,03-06-2021 --age=18,45 --vaccine=COVAXIN,COVISHIELD --did=265,273 --api=<API_KEY> --cid=<CHAT_ID>
+    
+**Note:** &emsp;&emsp;You can add mutiple arguments to each field by seperating with commas   
+**Warning:** &emsp;Adding more dates or Districts will slow down bot response time
   
 
 <br>
 
 
-## <a name="tele_bot">Setting up a Telegram Bot</a>:
+# <a name="tele_bot">Setting up a Telegram Bot</a>:
 
   1. Open Telegram and search for the user @BotFather
-  2. Use ```/newbot``` to create a new bot. The BotFather will ask you for a name and username, then generate an API token for your new bot.
-  3. Use the API token as mentioned above
+  2. Use ```/newbot``` to create a new bot. The BotFather will ask you for a name and username
+  3. Upon entering a valid name and username, BotFather will then generate an API token for your new bot.
+  4. Use the API token as mentioned above
 
 
 <br>
 
 
-## <a name="chat_id">Get your Telegram Chat ID </a>:
+# <a name="chat_id">Get your Telegram Chat ID </a>:
 
    1. Paste the following link in your browser. Replace `<API_TOKEN>`  with the API access token that you identified or created in the previous section:
         ```
@@ -133,7 +123,7 @@ Python3
 <br>
 
 
-## <a name="district_list">District IDs</a>
+# <a name="district_list">District IDs</a>
 
 <details>
   <summary> Andaman & Nicobar Islands </summary>
