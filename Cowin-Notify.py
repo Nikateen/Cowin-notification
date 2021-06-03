@@ -12,8 +12,8 @@ full_cmd_arguments = argv
 argument_list = full_cmd_arguments[1:]
 
 #Argument Description
-short_options = "a:c:d:D:A:v:o:O"
-long_options = ["api=", "cid=", "did=","date=","age=","vaccine=","dose=","alternate"]
+short_options = "a:c:d:D:A:v:o:t:O"
+long_options = ["api=", "cid=", "did=","date=","age=","vaccine=","dose=","threshold=","alternate"]
 
 #Required Values
 listOfDistrictID = []
