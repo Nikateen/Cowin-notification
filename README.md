@@ -65,7 +65,7 @@ If you want to support me you can do so below
       - EXPIRE_TIME:
           - ```--expire=<EXPIRE_TIME>``` Replace `<EXPIRE_TIME>` with the TTL for each message entry
           - changing this will resend messages that have not updated after <EXPIRE_TIME> mins 
-      - ALTERNATE_SEARCH (NOT IMPLEMENTED)
+      - ALTERNATE_SEARCH:
           - ```--alternate``` Include this option to try alternate search. 
           - Use this when it appears the regular search is not finding slots available 
           - Uses `calendarByDistrict`
