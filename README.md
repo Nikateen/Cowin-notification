@@ -1,16 +1,6 @@
 # Cowin-notification
 
-Run a python script that can look for vaccine avaiability based on your preferences
-
-<br>
-
-# Donate
-If you want to support me you can do so below 
-
-
-
-[![Donate](https://img.shields.io/badge/Help%20support%20me-RazorPay-blue.svg)](https://rzp.io/l/maDyuelFwi)
-
+a python script that can look for vaccine avaiability based on your preferences
    
 
 <br>
@@ -21,9 +11,9 @@ If you want to support me you can do so below
     ```
     pip install -r requirements.txt
     ```
-
-3. [Setup a telegram bot](#tele_bot) and obtain the API token
-4. [Obtain the telegram chat ID](#chat_id) you wish to use 
+    
+2. [Setup a telegram bot](#tele_bot) and obtain the API token
+3. [Obtain the telegram chat ID](#chat_id) you wish to use 
     
     ```
     python3 Cowin-Notify.py --api=<API_TOKEN> --cid=<CHAT_ID> --did=<DISTRICT_ID> [OPTIONS]
